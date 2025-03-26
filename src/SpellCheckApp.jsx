@@ -16,11 +16,20 @@ function SpellCheckApp() {
     const text = e.target.value;
     setInputText(text);
 
-    // Implement spelling check and correction
+    // Split text into words
     const words = text.split(" ");
-    const correctedWords = words.map((word) => customDictionary[word.toLowerCase()] || word);
 
-    setCorrectedText(correctedWords.join(" ")); // ✅ Store full corrected text
+    // Find the first incorrect word and its correction
+    let correction = "";
+    for (let word of words) {
+      const correctedWord = customDictionary[word.toLowerCase()];
+      if (correctedWord && correctedWord !== word) {
+        correction = `${correctedWord}`;
+        break; // Stop at the first mistake found
+      }
+    }
+
+    setCorrectedText(correction);
   };
 
   return (
